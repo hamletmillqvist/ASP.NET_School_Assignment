@@ -1,0 +1,38 @@
+﻿@{
+	ViewData["Title"] = "Child";
+}
+
+<h1>Child</h1>
+
+@if (ViewBag.HasError)
+{
+	<p>Error Result: @ViewBag.ErrorText</p>
+	<br />
+}
+
+<form method="post" action="@Url.Action("LimitBySearch", "Child")">
+	<div style="display:flex;flex-direction:row;">
+		<p style="margin-right:10px;margin-top:20px;">Child Name:</p>
+		<input style="margin-right:10px;" type="text" value="@ViewBag.SearchText" name="searchText" placeholder="Search Text" />
+		<input type="submit" value="Search"/>
+	</div>
+	<br />
+</form>
+
+<table style="border-collapse:collapse; width:100%;">
+	<tr>
+		@foreach (var column in ViewBag.ChildTable.Columns)
+		{
+			<th>@column.ColumnName</th>
+		}
+	</tr>
+	@foreach (var row in ViewBag.ChildTable.Rows)
+	{
+		<tr>
+			@for (int i = 0; i < ViewBag.ChildTable.Columns.Count; i++)
+			{
+				<td>@row[i]</td>
+			}
+		</tr>
+	}
+</table>

@@ -1,0 +1,54 @@
+﻿@{
+	ViewData["Title"] = "Wishlist";
+}
+
+<h1>Wishlist</h1>
+
+@if (ViewBag.HasError)
+{
+	<p>Error Result: @ViewBag.ErrorText</p>
+	<br />
+}
+
+<table style="border-collapse:collapse;width: 100%;">
+	<tr>
+		@foreach (var column in ViewBag.WishlistTable.Columns)
+		{
+			<th>@column.ColumnName </th>
+		}
+	</tr>
+	@foreach (var row in ViewBag.WishlistTable.Rows)
+	{
+		<tr>
+			@for (int i = 0; i < ViewBag.WishlistTable.Columns.Count; i++)
+			{
+				@if (ViewBag.WishlistTable.Columns[i].ColumnName == "Admitted")
+				{
+					<td>
+						<div class="makeCentered">
+							@if (row[i].GetType() != typeof(DBNull))
+							{
+								<p>@row[i]</p>
+							}
+							else
+							{
+								<form method="post" action="@Url.Action("SetAdmitted", "Wishlist")">
+									<input type="hidden" name="wishId" value="@row["Id"]"/>
+									<input type="hidden" name="wishYear" value="@row["Year"]"/>
+									<input type="submit" name="admitStr" value="Admit" />
+									<input type="submit" name="admitStr" value="Deny" />
+								</form>
+							}
+						</div>
+					</td>
+				}
+				else
+				{
+					<td>
+						@row[i]
+					</td>
+				}
+			}
+		</tr>
+	}
+</table>

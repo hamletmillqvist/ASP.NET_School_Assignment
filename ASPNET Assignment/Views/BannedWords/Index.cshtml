@@ -1,0 +1,33 @@
+﻿@{
+	ViewData["Title"] = "Banned Words";
+}
+
+@if (!String.IsNullOrEmpty(ViewBag.PopupMessage))
+{
+	<script>
+		alert('@ViewBag.PopupMessage');
+	</script>
+}
+
+<h1>Banned Words</h1>
+
+@if (ViewBag.HasError)
+{
+	<p>Error Result: @ViewBag.ErrorText</p>
+	<br />
+}
+
+@foreach (var row in ViewBag.BannedWordsTable.Rows)
+{
+	<hr />
+	<div style="display:flex;flex-direction:column;">
+		<p>
+			@row["Word"]
+		</p>
+		
+		<form method="post" action="@Url.Action("LiftBan", "BannedWords")">
+			<input type="hidden" name="word" value="@row["Word"] " />
+			<input type="submit" value="Allow" />
+		</form>
+	</div>
+}

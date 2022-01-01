@@ -1,0 +1,39 @@
+﻿@{
+	ViewData["Title"] = "Move Sleigh";
+}
+
+<h1>Selected Sleigh</h1>
+
+@if (ViewBag.HasError)
+{
+	<p>Error Result: @ViewBag.ErrorText</p>
+	<br />
+}
+
+<br />
+<p>Name: @ViewBag.SelectedSleigh["Name"]</p>
+<p>Number: @ViewBag.SelectedSleigh["Number"]</p>
+<p>Manufacturer Number: @ViewBag.SelectedSleigh["Manufacturer"]</p>
+<p>Stationed Region: @ViewBag.SelectedSleigh["Region"]</p>
+<p></p>
+
+<div class="makeCentered">
+	<form method="post" action="@Url.Action("MoveSleigh", "Sleigh")">
+		<label style="border: 1px solid black;padding: 5px;">
+			Select new region: <br />
+				<select name="regionCode">
+					<option value="">-- Pick a region --</option>
+
+					@foreach (var row in ViewBag.RegionTable.Rows)
+					{
+						<option value="@row["Code"]">@row["CountryName"]</option>
+					}
+				</select>
+			<br /><br />
+
+			<input type="hidden" name="sleighNr" value="@ViewBag.SelectedSleigh["Number"]" />
+			<input type="submit" name="submit" value="OK" />
+			<input type="submit" name="submit" value="Back" />
+		</label>
+	</form>
+</div>
